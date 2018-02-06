@@ -2,20 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using LotterySyndicate.API.Services;
 using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace LotterySyndicate.API.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class LotteryLinesController : Controller
     {
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private ILotterySyndicateRepository _lotterySyndicateRepository;
+
+        public LotteryLinesController(ILotterySyndicateRepository lotterySyndicateRepository)
         {
-            return new string[] { "value1", "value2" };
+            _lotterySyndicateRepository = lotterySyndicateRepository;
+        }
+
+        // GET: api/values
+        [HttpGet()]
+        public IActionResult GetLines()
+        {
+            return Ok(_lotterySyndicateRepository.GetLines());
         }
 
         // GET api/values/5
@@ -29,21 +37,18 @@ namespace LotterySyndicate.API.Controllers
         [HttpPost]
         public void Post([FromBody]string value)
         {
-            // For more information on protecting this API from Cross Site Request Forgery (CSRF) attacks, see http://go.microsoft.com/fwlink/?LinkID=717803
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
-            // For more information on protecting this API from Cross Site Request Forgery (CSRF) attacks, see http://go.microsoft.com/fwlink/?LinkID=717803
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            // For more information on protecting this API from Cross Site Request Forgery (CSRF) attacks, see http://go.microsoft.com/fwlink/?LinkID=717803
         }
     }
 }
